@@ -50,7 +50,7 @@ const realeseAccess = e => {
                 popup.style.display = 'none'
                 var passUsed = listPassword.indexOf(passToAccess)
                 listPassword.splice(passUsed, 1)
-                const passRef = doc(db, 'passwords', 'kfcQsEptXlmIOHOgwFRq')
+                const passRef = doc(db, 'passwords', 'IS1Zuw26MGzTKVt9gC9T')
                 updateDoc(passRef, { password: listPassword })
                     .then(() => log('Document atualizado'))
                     .catch(log)
@@ -213,7 +213,7 @@ const showContainer = e => {
         button.ariaLabel = 'Close'
         modalHeader.append(h5, button)
 
-        p.textContent = 'Deseja enviar algum presente ao casal?'
+        p.textContent = 'Deseja levar algum presente para o casal?'
         modalBody.append(p)
 
         buttonFooter.type = 'button'
