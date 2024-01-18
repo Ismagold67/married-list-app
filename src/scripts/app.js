@@ -400,10 +400,11 @@ const addGift = async e => {
     const name = e.target.email.value
     if(giftWillSend.length > 0){
         const [error, doc] = await to(addDoc(collectionGames, {
-            name: sanitize(`${name}/${guestsInvited[0]}`),
+            name: sanitize(`${guestsInvited[0]}`),
+            description: sanitize(name),
             otherNames: guestsInvited.slice(1).map(name => sanitize(name)),
             createdAt: serverTimestamp(),
-            arrayPresents: sanitize(giftWillSend)
+            arrayPresents: sanitize(giftWillSend).map(present => sanitize(present))
         }))
     
         if(error) {
@@ -415,6 +416,7 @@ const addGift = async e => {
     } else {
         alert('Selecione pelo menos um item para concluir!')
     }
+    alert('Aguarde o Download do convite ser concluido!')
     generatePDFWithList(guestsInvited[0], giftWillSend)
     setTimeout(function reload(){
         location.reload();
