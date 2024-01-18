@@ -32,10 +32,12 @@ const formAuthentication = document.querySelector('[data-js="aut"]')
 const sanitize = string => DOMPurify.sanitize(string)
 const giftWillSend = []
 let guestsInvited = []
+let passToIndex = ''
 
 const realeseAccess = e => {
     e.preventDefault()
     const passToAccess = e.target.password.value
+    passToIndex = passToAccess
     var listPassword = []
     getDocs(colletionPasswords)
         .then(querySnapshot => {
@@ -61,7 +63,7 @@ const realeseAccess = e => {
 
 const addGuestInDataBase = e => {
     e.preventDefault()
-
+    console.log(passToIndex)
     let listFromInput = []
     const guests = document.getElementsByName('guest')
     const table = document.querySelector('.table')
