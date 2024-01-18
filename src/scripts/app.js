@@ -50,10 +50,10 @@ const realeseAccess = e => {
                 popup.style.display = 'none'
                 var passUsed = listPassword.indexOf(passToAccess)
                 listPassword.splice(passUsed, 1)
-                // const passRef = doc(db, 'passwords', 'kfcQsEptXlmIOHOgwFRq')
-                // updateDoc(passRef, { password: listPassword })
-                //     .then(() => log('Document atualizado'))
-                //     .catch(log)
+                const passRef = doc(db, 'passwords', 'kfcQsEptXlmIOHOgwFRq')
+                updateDoc(passRef, { password: listPassword })
+                    .then(() => log('Document atualizado'))
+                    .catch(log)
             } else {
                 alert('Senha Incorreta, tente novamente!!')
             }
@@ -400,6 +400,8 @@ const to = promise => promise
 
 const addGift = async e => {
     e.preventDefault()
+    const btnLg = document.querySelector('.btn-lg')
+    btnLg.remove()
     const name = e.target.email.value
     if(giftWillSend.length > 0){
         const [error, doc] = await to(addDoc(collectionGames, {
@@ -421,6 +423,7 @@ const addGift = async e => {
         alert('Selecione pelo menos um item para concluir!')
     }
     alert('Aguarde o Download do convite ser concluido!')
+    
     generatePDFWithList(passToIndex.replace(/\s/g, ''), guestsInvited[0].replace(/\s/g, ''), giftWillSend)
     setTimeout(function reload(){
         location.reload();
