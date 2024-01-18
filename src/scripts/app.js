@@ -231,8 +231,23 @@ const showContainer = e => {
         modalDialog.append(modalContent)
         modal.append(modalDialog)
         modal.style.marginTop = '100px'
+        let listWithPix = []
+        getDocs(collection(db, 'gifts'))
+        .then(querySnapshot => {
+            querySnapshot.docs.forEach(docu => {
+                listWithPix = docu.data().gift
 
-        listGuests.append(modal)
+                if(!listWithPix.includes('1 - pix')){
+                    listWithPix.unshift('1 - pix')
+                    const passRef = doc(db, 'gifts', 'WIsNeSZUp19oLVb5waOP')
+                    updateDoc(passRef, { gift: listWithPix })
+                        .then(() => log('Document atualizado'))
+                        .catch(log)
+                }
+            })
+        })
+        .catch(log)
+
     }
 }
 
@@ -241,6 +256,7 @@ const presentQuestion = async e => {
     console.log(guestsInvited.slice(1))
     if(dataQ == 'yes'){
         container.style.display = 'flex'
+        createContainerPresentsList()
         listGuests.style.display = 'none'
     } else {
         const [error, doc] = await to(addDoc(collectionGames, {
@@ -262,7 +278,8 @@ const presentQuestion = async e => {
     }
 }
 
-getDocs(collectionGifts)
+function createContainerPresentsList(){
+    getDocs(collectionGifts)
     .then(querySnapshot => {
         querySnapshot.docs.forEach(docu => {
             let presentList = docu.data().gift
@@ -333,6 +350,7 @@ getDocs(collectionGifts)
         })
     })
     .catch(log)
+}
 
 function showList(){
     const showList = document.querySelector('[data-js="showList"]')
