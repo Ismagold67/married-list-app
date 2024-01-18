@@ -400,7 +400,7 @@ const addGift = async e => {
     const name = e.target.email.value
     if(giftWillSend.length > 0){
         const [error, doc] = await to(addDoc(collectionGames, {
-            name: sanitize(`${guestsInvited[0]}`),
+            name: sanitize(guestsInvited[0]),
             description: sanitize(name),
             otherNames: guestsInvited.slice(1).map(name => sanitize(name)),
             createdAt: serverTimestamp(),
