@@ -404,7 +404,7 @@ const addGift = async e => {
             description: sanitize(name),
             otherNames: guestsInvited.slice(1).map(name => sanitize(name)),
             createdAt: serverTimestamp(),
-            arrayPresents: sanitize(giftWillSend).map(present => sanitize(present))
+            arrayPresents: giftWillSend.map(present => sanitize(present))
         }))
     
         if(error) {
@@ -420,7 +420,7 @@ const addGift = async e => {
     generatePDFWithList(guestsInvited[0], giftWillSend)
     setTimeout(function reload(){
         location.reload();
-    }, 6000)
+    }, 5000)
 }
 formAddGift.addEventListener('submit', addGift)
 navBottom.addEventListener('click', showList)
