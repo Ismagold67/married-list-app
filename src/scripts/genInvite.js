@@ -1,7 +1,7 @@
-export function generatePDF(userName) {
+export function generatePDF(id, userName) {
     const pdfDoc = new jsPDF();
 
-    const qrCodeContent = `https://authtest-chi.vercel.app/html/${userName}.html`;
+    const qrCodeContent = `https://authtest-chi.vercel.app/html/${id}.html`;
     const qrCodeContainer = document.createElement('div');
     const qrCode = new QRCode(qrCodeContainer, {
       text: qrCodeContent,
@@ -22,11 +22,11 @@ export function generatePDF(userName) {
 
     pdfDoc.save(`convite-de-${userName}.pdf`);
 }
-export function generatePDFWithList(userName, giftWillSend) {
+export function generatePDFWithList(id, userName, giftWillSend) {
 
     const pdfDoc = new jsPDF();
 
-    const qrCodeContent = `https://authtest-chi.vercel.app/html/${userName}.html`;
+    const qrCodeContent = `https://authtest-chi.vercel.app/html/${id}.html`;
     const qrCodeContainer = document.createElement('div');
     const qrCode = new QRCode(qrCodeContainer, {
       text: qrCodeContent,

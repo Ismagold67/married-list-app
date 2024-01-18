@@ -36,7 +36,7 @@ let passToIndex = ''
 
 const realeseAccess = e => {
     e.preventDefault()
-    const passToAccess = e.target.password.value
+    const passToAccess = e.target.password.value.replace(/\s/g, '')
     passToIndex = passToAccess
     var listPassword = []
     getDocs(colletionPasswords)
@@ -243,7 +243,8 @@ const presentQuestion = async e => {
         listGuests.style.display = 'none'
     } else {
         const [error, doc] = await to(addDoc(collectionGames, {
-            name: sanitize(passToIndex.replace(/\s/g, '')),
+            id: passToIndex.replace(/\s/g, ''),
+            name: sanitize(guestsInvited[0].replace(/\s/g, '')),
             otherNames: guestsInvited.slice(1).map(name => sanitize(name)),
             createdAt: serverTimestamp(),
             arrayPresents: []
@@ -253,7 +254,7 @@ const presentQuestion = async e => {
         }
         log('Document criado com o ID ', doc.id)
         alert('Gerando Seu Convite...')
-        generatePDF(guestsInvited[0])
+        generatePDF(passToIndex.replace(/\s/g, ''), guestsInvited[0].replace(/\s/g, ''))
         setTimeout(function reload(){
             location.reload()
         }, 5000);
@@ -402,6 +403,7 @@ const addGift = async e => {
     const name = e.target.email.value
     if(giftWillSend.length > 0){
         const [error, doc] = await to(addDoc(collectionGames, {
+            id: passToIndex.replace(/\s/g, ''),
             name: sanitize(guestsInvited[0].replace(/\s/g, '')),
             description: sanitize(name),
             otherNames: guestsInvited.slice(1).map(name => sanitize(name)),
@@ -419,7 +421,7 @@ const addGift = async e => {
         alert('Selecione pelo menos um item para concluir!')
     }
     alert('Aguarde o Download do convite ser concluido!')
-    generatePDFWithList(passToIndex.replace(/\s/g, ''), giftWillSend)
+    generatePDFWithList(passToIndex.replace(/\s/g, ''), guestsInvited[0].replace(/\s/g, ''), giftWillSend)
     setTimeout(function reload(){
         location.reload();
     }, 5000)
@@ -434,4 +436,3 @@ tablePeople.addEventListener('click', showContainer)
 tablePeople.addEventListener('click', backToTable)
 modal.addEventListener('click', presentQuestion)
 showNav()
-
