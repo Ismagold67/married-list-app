@@ -179,7 +179,6 @@ const deleteInputGuest = e =>{
         const inputTarget = document.querySelector(`[data-div="${datasetRemove}"]`)
         inputTarget.remove()
     }
-    console.log(datasetRemove)
 }
 
 const showContainer = e => {
