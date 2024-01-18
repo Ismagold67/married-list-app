@@ -230,6 +230,7 @@ const showContainer = e => {
         modalContent.append(modalHeader, modalBody, modalFooter)
         modalDialog.append(modalContent)
         modal.append(modalDialog)
+        modal.style.marginTop = '100px'
 
         listGuests.append(modal)
     }
