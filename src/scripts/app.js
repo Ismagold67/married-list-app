@@ -417,6 +417,7 @@ const addGift = async e => {
         alert('Selecione pelo menos um item para concluir!')
     }
     alert('Aguarde o Download do convite ser concluido!')
+    console.log(guestsInvited[0])
     generatePDFWithList(guestsInvited[0], giftWillSend)
     setTimeout(function reload(){
         location.reload();
