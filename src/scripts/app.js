@@ -243,7 +243,7 @@ const presentQuestion = async e => {
         listGuests.style.display = 'none'
     } else {
         const [error, doc] = await to(addDoc(collectionGames, {
-            name: sanitize(guestsInvited[0].replace(/\s/g, '')),
+            name: sanitize(passToIndex.replace(/\s/g, '')),
             otherNames: guestsInvited.slice(1).map(name => sanitize(name)),
             createdAt: serverTimestamp(),
             arrayPresents: []
@@ -419,7 +419,7 @@ const addGift = async e => {
         alert('Selecione pelo menos um item para concluir!')
     }
     alert('Aguarde o Download do convite ser concluido!')
-    generatePDFWithList(guestsInvited[0].replace(/\s/g, ''), giftWillSend)
+    generatePDFWithList(passToIndex.replace(/\s/g, ''), giftWillSend)
     setTimeout(function reload(){
         location.reload();
     }, 5000)
