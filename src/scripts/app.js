@@ -22,7 +22,6 @@ const showListPresents = document.querySelector('.showListPresents')
 const navBottom = document.querySelector('[data-js="showList"]')
 const container = document.querySelector('.container')
 const listGuests = document.querySelector('.listGuests')
-const plusGuest = document.querySelector('[data-js="plus-guest"]')
 const tablePeople = document.querySelector('[data-table="table-people"]')
 const guestList = document.querySelector('[data-js="guest-list"]')
 const modal = document.querySelector('[data-question="question"]')
@@ -50,13 +49,49 @@ const realeseAccess = e => {
                 popup.style.display = 'none'
                 var passUsed = listPassword.indexOf(passToAccess)
                 listPassword.splice(passUsed, 1)
-                const passRef = doc(db, 'passwords', 'IS1Zuw26MGzTKVt9gC9T')
-                updateDoc(passRef, { password: listPassword })
-                    .then(() => log('Document atualizado'))
-                    .catch(log)
+                // const passRef = doc(db, 'passwords', 'IS1Zuw26MGzTKVt9gC9T')
+                // updateDoc(passRef, { password: listPassword })
+                //     .then(() => log('Document atualizado'))
+                //     .catch(log)
             } else {
                 alert('Senha Incorreta, tente novamente!!')
             }
+        })
+        .catch(log)
+        let inp = 0
+        function addInputGuest(nameGuest){
+            inp++
+            const div = document.createElement('div')
+
+            div.setAttribute('class', 'input-group mb-3')
+            div.setAttribute('data-div', `inp${inp}`)
+        
+            const input = document.createElement('input')
+            input.setAttribute('type', 'text')
+            input.setAttribute('name', 'guest')
+            input.setAttribute('class', 'form-control')
+            input.setAttribute('placeholder', 'Digite o nome')
+            input.setAttribute('aria-label', `Recipient's username`)
+            input.setAttribute('aria-describedby', 'button-addon2')
+            input.required = true
+            input.value = nameGuest
+            input.disabled = true
+            div.appendChild(input)
+            inputsGuest.append(div)
+        }
+        getDocs(collection(db, 'guest'))
+            .then(querySnapshot => {
+                querySnapshot.docs.forEach(doc => {
+                    const idDb = doc.id
+                    if(idDb === passToAccess){
+                        const listG = doc.data().guests
+                        for(let i = 0; i < listG.length; i++){
+                            addInputGuest(listG[i])
+                        }
+                    } else {
+                        console.log('no')
+                    }
+                })
         })
         .catch(log)
 }
@@ -138,46 +173,12 @@ const addGuestInDataBase = e => {
     processGuests();
 }
 
-
-let inp = 0
-function addInputGuest(){
-    inp++
-    const div = document.createElement('div')
-    const i = document.createElement('i')
-    i.setAttribute('class', 'bx bx-x-circle')
-    i.setAttribute('data-i', `inp${inp}`)
-    div.setAttribute('class', 'input-group mb-3')
-    div.setAttribute('data-div', `inp${inp}`)
-
-    const input = document.createElement('input')
-    input.setAttribute('type', 'text')
-    input.setAttribute('name', 'guest')
-    input.setAttribute('class', 'form-control')
-    input.setAttribute('placeholder', 'Digite o nome')
-    input.setAttribute('aria-label', `Recipient's username`)
-    input.setAttribute('aria-describedby', 'button-addon2')
-    input.required = true
-
-    div.appendChild(input)
-    div.append(i)
-    inputsGuest.append(div)
-}
-
 const backToTable = e =>{
     const dataSetButton = e.target.dataset.button2
     if(dataSetButton){
         tablePeople.innerHTML = ''
         guestList.style.display = 'block'
         guestsInvited = []
-    }
-}
-
-const deleteInputGuest = e =>{
-    const datasetRemove = e.target.dataset.i
-
-    if(datasetRemove){
-        const inputTarget = document.querySelector(`[data-div="${datasetRemove}"]`)
-        inputTarget.remove()
     }
 }
 
@@ -450,9 +451,7 @@ const addGift = async e => {
 formAddGift.addEventListener('submit', addGift)
 navBottom.addEventListener('click', showList)
 formAuthentication.addEventListener('submit', realeseAccess)
-plusGuest.addEventListener('click', addInputGuest)
 guestList.addEventListener('submit', addGuestInDataBase)
-inputsGuest.addEventListener('click', deleteInputGuest)
 tablePeople.addEventListener('click', showContainer)
 tablePeople.addEventListener('click', backToTable)
 modal.addEventListener('click', presentQuestion)
