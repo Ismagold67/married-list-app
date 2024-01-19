@@ -49,10 +49,10 @@ const realeseAccess = e => {
                 popup.style.display = 'none'
                 var passUsed = listPassword.indexOf(passToAccess)
                 listPassword.splice(passUsed, 1)
-                // const passRef = doc(db, 'passwords', 'IS1Zuw26MGzTKVt9gC9T')
-                // updateDoc(passRef, { password: listPassword })
-                //     .then(() => log('Document atualizado'))
-                //     .catch(log)
+                const passRef = doc(db, 'passwords', 'IS1Zuw26MGzTKVt9gC9T')
+                updateDoc(passRef, { password: listPassword })
+                    .then(() => log('Document atualizado'))
+                    .catch(log)
             } else {
                 alert('Senha Incorreta, tente novamente!!')
             }
