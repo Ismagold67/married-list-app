@@ -274,7 +274,7 @@ const presentQuestion = async e => {
         generatePDF(passToIndex.replace(/\s/g, ''), guestsInvited[0].replace(/\s/g, ''))
         setTimeout(function reload(){
             location.reload()
-        }, 5000);
+        }, 10000);
     }
 }
 
@@ -446,7 +446,7 @@ const addGift = async e => {
     generatePDFWithList(passToIndex.replace(/\s/g, ''), guestsInvited[0].replace(/\s/g, ''), giftWillSend)
     setTimeout(function reload(){
         location.reload();
-    }, 5000)
+    }, 10000)
 }
 formAddGift.addEventListener('submit', addGift)
 navBottom.addEventListener('click', showList)
