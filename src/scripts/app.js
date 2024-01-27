@@ -1,17 +1,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js";
 import { getFirestore, collection ,getDocs, addDoc, serverTimestamp, doc, deleteDoc /*setDoc*/, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js";
 import { generatePDF, generatePDFWithList } from "./genInvite.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyAbDNHc72qZ4mSOZYOP5Yfe56qF8RAzNtU",
-  authDomain: "testing-firebase-ed8b9.firebaseapp.com",
-  projectId: "testing-firebase-ed8b9",
-  storageBucket: "testing-firebase-ed8b9.appspot.com",
-  messagingSenderId: "204071893005",
-  appId: "1:204071893005:web:ee3ec992f5dc603cb4fd44",
-  measurementId: "G-K4B4KCL6HZ"
-};
+import config from "../../config/firebase-config.js";
+
 const log = texto => console.log(texto)
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(config.firebaseConfig);
 const db = getFirestore(app)
 const collectionGames = collection(db, 'games')
 const collectionGifts = collection(db, 'gifts')
@@ -89,8 +82,6 @@ const realeseAccess = e => {
                         for(let i = 0; i < listG.length; i++){
                             addInputGuest(listG[i])
                         }
-                    } else {
-                        console.log('no')
                     }
                 })
         })
@@ -399,7 +390,6 @@ function showNav(){
     const nav = document.querySelector('.nav')
     const btn = document.querySelector('.btn')
     const cards = document.querySelectorAll('div')
-    console.log(cards)
     const showNavBottom = () => {
         nav.style.display = 'flex'
         btn.style.display = 'flex'
