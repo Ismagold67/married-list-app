@@ -28,6 +28,7 @@ const modal = document.querySelector('[data-question="question"]')
 const inputsGuest = document.querySelector('.inputs-guest')
 const popup = document.querySelector('.popup')
 const formAuthentication = document.querySelector('[data-js="aut"]')
+const popWait = document.querySelector('.pop-wait')
 const sanitize = string => DOMPurify.sanitize(string)
 const giftWillSend = []
 let guestsInvited = []
@@ -259,6 +260,7 @@ const presentQuestion = async e => {
         createContainerPresentsList()
         listGuests.style.display = 'none'
     } else {
+        modal.style.display = 'none'
         const [error, doc] = await to(addDoc(collectionGames, {
             id: passToIndex.replace(/\s/g, ''),
             name: sanitize(guestsInvited[0].replace(/\s/g, '')),
@@ -270,13 +272,14 @@ const presentQuestion = async e => {
             return log(error)
         }
         log('Document criado com o ID ', doc.id)
-        alert('Gerando Seu Convite...')
         generatePDF(passToIndex.replace(/\s/g, ''), guestsInvited[0].replace(/\s/g, ''))
+        popWait.style.display = 'flex'
         setTimeout(function reload(){
             location.reload()
-        }, 10000);
+        }, 15000);
     }
 }
+
 
 function createContainerPresentsList(){
     getDocs(collectionGifts)
@@ -441,12 +444,12 @@ const addGift = async e => {
     } else {
         alert('Selecione pelo menos um item para concluir!')
     }
-    alert('Aguarde o Download do convite ser concluido!')
-    
+    popWait.style.display = 'flex'
+    container.style.display = 'none'
     generatePDFWithList(passToIndex.replace(/\s/g, ''), guestsInvited[0].replace(/\s/g, ''), giftWillSend)
     setTimeout(function reload(){
         location.reload();
-    }, 10000)
+    }, 15000)
 }
 formAddGift.addEventListener('submit', addGift)
 navBottom.addEventListener('click', showList)
